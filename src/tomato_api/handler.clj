@@ -27,7 +27,7 @@
       (POST "/tomato" [date count]
         :body [body Tomato]
         :return s/Str
-        :summary "Добавление статистики количества томатов по дате"
+        :summary "Добавление/обновление статистики количества томатов по дате"
         (db/add-tomato date count)
         (ok "Помидоры успешно добавлены!")))))
 
