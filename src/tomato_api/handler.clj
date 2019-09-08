@@ -1,19 +1,18 @@
 (ns tomato-api.handler
   (:require [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
-            [ring.adapter.jetty :refer [run-jetty]]))
-
-(def tomatos (atom []))
+            [tomato-api.db :as db]))
 
 (def app
   (api
  
+    (GET "/" []
+      (ok {:text-for-max "Володя сказал - Володя сдедал!"}))
+    
     (GET "/api/tomato" []
-      (ok {:result @tomatos}))
+      (ok {:result (db/get-all-tomatos)}))
   
     (POST "/api/tomato" [date count]
-      (swap! tomatos conj {:date date :count count})
+      (db/add-tomato date count)
       (ok {:result "Помидори успешно добавлены!"}))))
 
-(defn -main [port-number]  
-  (run-jetty app {:port (Integer. port-number)}))

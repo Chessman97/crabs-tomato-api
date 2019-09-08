@@ -1,1 +1,1 @@
-web: lein run -m tomato-api.handler $PORT
+web: lein run -m tomato-api.core $PORT
