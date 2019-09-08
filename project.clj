@@ -2,7 +2,7 @@
    :description "Clojure - top"
    
    :dependencies [[org.clojure/clojure "1.10.0"]                  
-                  [metosin/compojure-api "2.0.0-alpha26"]
+                  [metosin/compojure-api "2.0.0-alpha30"]
                   [ring/ring-jetty-adapter "1.6.3"]
                   [org.clojure/tools.logging "0.5.0"]]   
    
