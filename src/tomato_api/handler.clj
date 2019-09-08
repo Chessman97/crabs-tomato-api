@@ -1,18 +1,33 @@
 (ns tomato-api.handler
   (:require [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
-            [tomato-api.db :as db]))
+            [tomato-api.db :as db]
+            [schema.core :as s]))
+
+(s/defschema Tomato
+  {:date s/Str :count s/Int})
 
 (def app
   (api
- 
-    (GET "/" []
-      (ok {:text-for-max "Володя сказал - Володя сдедал!"}))
-    
-    (GET "/api/tomato" []
-      (ok {:result (db/get-all-tomatos)}))
+    {:swagger 
+     {:ui "/"
+      :spec "/swagger.json"
+      :data {:info {:title "Tomato-api by crabs"
+                    :description "Api для проложения сбора и отображения статистики сделанных помидорок"}
+             :tags [{:name "api" :description "работа со статистикой"}]}}}
   
-    (POST "/api/tomato" [date count]
-      (db/add-tomato date count)
-      (ok {:result "Помидори успешно добавлены!"}))))
+    (context "/api" [] 
+      :tags["api"]
+  
+      (GET "/tomato" []
+        :return [Tomato]
+        :summary "Получение статистики количества томатов по дням"
+        (ok (db/get-all-tomatos)))
+  
+      (POST "/tomato" [date count]
+        :body [body Tomato]
+        :return s/Str
+        :summary "Добавление статистики количества томатов по дате"
+        (db/add-tomato date count)
+        (ok "Помидоры успешно добавлены!")))))
 

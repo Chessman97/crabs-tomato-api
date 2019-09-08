@@ -5,6 +5,7 @@
                   [metosin/compojure-api "2.0.0-alpha26"]
                   [ring/ring-jetty-adapter "1.6.3"]
                   [org.clojure/tools.logging "0.5.0"]]   
+   
    :ring {:handler tomato-api.handler/app}
    
    :main tomato-api.handler
